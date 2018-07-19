@@ -23,11 +23,9 @@ io.on('connection', (socket)=>{
     console.log(data);
     io.emit('newMessage',generateMessage(data.from, data.text));
     callback('from server');
-    // socket.broadcast.emit('newMessage',{
-    //   from:data.from,
-    //   to: data.text,
-    //   createdAt: new Date().getTime()
-    // });
+  });
+  socket.on('createLocationMessage',function(coords){
+    io.emit('newMessage', generateMessage('Admin', `${coords.latitude}, ${coords.longitude}`));
   });
   socket.on('disconnect', ()=>{
     console.log("Lost a client");
